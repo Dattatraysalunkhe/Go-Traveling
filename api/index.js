@@ -12,5 +12,5 @@ app.use(express.json())  //we requesting json fromat data
 app.use(cookieParser())
 
 app.use("/api", (req,res) =>{
-   res.send("hello there  ")
+   res.send("hello there is new")
 })
