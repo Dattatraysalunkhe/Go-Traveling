@@ -31,6 +31,6 @@ app.use(express.json())  //we requesting json fromat data
 app.use(cookieParser())
 
 app.use("/api", (req,res) =>{
-   res.send("from feat1")
+   res.send("from .ENV")
 })
 
