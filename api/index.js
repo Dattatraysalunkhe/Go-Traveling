@@ -3,6 +3,7 @@ import express from 'express'
 import {DB_Name} from "./Utils/constant.js"
 import mongoose from 'mongoose'
 import { configDotenv } from 'dotenv'
+import path from 'path'
 
 configDotenv() // this for env access all over
 
@@ -23,6 +24,9 @@ const dbConnect = async() => {
 
 dbConnect()
 
+const __dirname = path.resolve();
+
+
 app.listen(port , () => {
     console.log(`port is listing ${port}`)
 })
@@ -32,5 +36,14 @@ app.use(cookieParser())
 
 app.use("/api", (req,res) =>{
    res.send("from .ENV solved")
+})
+
+//  this code for after use api beacuse below code is client biuld make api above this code
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+// this for when go on / run below the file
+app.get('*',(req,res) => {
+    res.sendFile(path.join(__dirname,'client','dist','index.html'))
 })
 
