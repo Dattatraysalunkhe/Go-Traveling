@@ -10,6 +10,7 @@ const App = () => {
   const contentRef = useRef(null);
   const textRefs = useRef([]);
   textRefs.current = [];
+  const comp = useRef(null)
 
   // Function to calculate time left
   const calculateTimeLeft = () => {
@@ -69,22 +70,70 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const t1 = gsap.timeline()
+      t1.from("#intro-slider", {
+        xPercent: "-100",
+        duration: 1.3,
+        delay: 0.3,
+      })
+        .from(["#title-1", "#title-2", "#title-3"], {
+          opacity: 0,
+          y: "+=30",
+          stagger: 0.5,
+        })
+        .to(["#title-1", "#title-2", "#title-3"], {
+          opacity: 0,
+          y: "-=30",
+          delay: 0.3,
+          stagger: 0.5,
+        })
+        .to("#intro-slider", {
+          xPercent: "-100",
+          duration: 1.3,
+        })
+        .from("#welcome", {
+          opacity: 0,
+          duration: 0.5,
+        })
+
+
+    }, comp)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-800 text-white">
       {/* Black screen overlay with message */}
+       
+      
+      <div className="relative" ref={comp}>
       <div
-        ref={overlayRef}
-        className="absolute inset-0 bg-black flex items-center justify-center text-center"
-        style={{ transform: 'translateX(0%)' }} // Start position on-screen
+        id="intro-slider"
+        className="h-screen p-10 bg-gray-50 absolute top-0 left-0 font-spaceGrotesk z-10 w-full flex flex-col gap-10 tracking-tight"
       >
-        <div className="text-white p-8">
-          <h1 className="text-5xl font-bold mb-4" ref={addToRefs}>Welcome!</h1>
-          <h1 className="text-3xl font-bold mb-4" ref={addToRefs}>Exciting Travel Experience Coming Soon!</h1>
-          {/* <p className="text-md mb-6" ref={addToRefs}>Track expenses, organize checklists, book flights and hotels, and share your travel stories—all in one place. Stay tuned for our launch!</p> */}
-        </div>
+        <h1 className="text-6xl pt-32 font-bold text-center text-black" id="title-1">
+        "Adventure Awaits"
+        </h1>
+        <h1 className="text-6xl font-bold text-center text-black" id="title-2">
+        "Your Journey Starts"
+        </h1>
+        <h1 className="text-6xl font-bold text-center text-black" id="title-3">
+        "Stay Tuned"
+        </h1>
       </div>
+      <div className="h-screen flex bg-gray-950 justify-center place-items-center">
+        <h1
+          id="welcome"
+          className="text-9xl font-bold text-gray-100 font-spaceGrotesk"
+        >
+          Welcome.
+        </h1>
+      </div>
+    </div>
 
-      {/* Main content with video background */}
       <div
         ref={contentRef}
         className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -101,7 +150,7 @@ const App = () => {
           <div className="relative min-h-screen  bg-opacity-60 flex flex-col items-center justify-center">
             <h1 className="text-5xl font-bold mb-6" ref={addToRefs}>Exciting Travels Await!</h1>
             <p className="text-xl mb-8" ref={addToRefs}>Our new travel experience is launching soon. Stay tuned!</p>
-            <p className="text-md mb-6" ref={addToRefs}>Track expenses, organize checklists, book flights and hotels, and share your travel stories—all in one place. Stay tuned for our launch!</p>
+            <p className="text-md mb-6 px-48" ref={addToRefs}>The future of travel is on the horizon. We’re working on something amazing that will change the way you plan and experience your trips. Keep your eyes peeled and stay tuned for more details. The countdown to an incredible journey starts now!</p>
             <div className="flex space-x-4 text-center">
               <div className="bg-gray-900 p-6 rounded-lg shadow-lg" ref={addToRefs}>
                 <p className="text-3xl font-semibold">{timeLeft.days || 0}</p>
