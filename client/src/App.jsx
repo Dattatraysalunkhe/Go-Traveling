@@ -75,6 +75,7 @@ const App = () => {
       t1.from("#intro-slider", {
         xPercent: "-100",
         duration: 1.3,
+        
         delay: 0.3,
       })
         .from(["#title-1", "#title-2", "#title-3"], {
@@ -104,25 +105,33 @@ const App = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-800 text-white">
       {/* Black screen overlay with message */}
-      <div className="absolute inset-0 bg-black z-50 flex flex-col items-center justify-center" ref={overlayRef}>
+      {/* <div className="absolute inset-0 bg-black z-50 flex flex-col items-center justify-center" ref={overlayRef}>
         <p className="text-white text-2xl md:text-4xl lg:text-5xl font-bold">Loading...</p>
-        {/* <h1 className="text-white text-2xl md:text-4xl lg:text-5xl font-bold" >Exciting Travel Experience Coming Soon...</h1> */}
-      </div>
+      </div> */}
 
       <div className="relative" ref={comp}>
         <div
           id="intro-slider"
           className="h-screen p-10 bg-gray-50 absolute top-0 left-0 font-spaceGrotesk z-10 w-full flex flex-col gap-6 md:gap-10 lg:gap-12 tracking-tight"
         >
-          <h1 className="text-4xl pt-36 md:text-5xl lg:text-6xl font-bold text-center text-black" id="title-1">
+          {/* <h1 className="text-8xl pt-36 md:text-5xl lg:text-6xl font-bold text-center text-black" id="title-1">
             "Adventure Awaits"
           </h1>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center text-black" id="title-2">
+          <h1 className="text-8xl md:text-5xl lg:text-6xl font-bold text-center text-black" id="title-2">
             "Your Journey Starts"
           </h1>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center text-black" id="title-3">
+          <h1 className="text-8xl md:text-5xl lg:text-6xl font-bold text-center text-black" id="title-3">
             "Stay Tuned"
-          </h1>
+          </h1> */}
+           <h1 className="text-5xl text-center font-bold pt-40 text-black md:text-5xl md:font-normal  md:p-0 md:text-start lg:text-9xl " id="title-1">
+           Adventure Awaits
+        </h1>
+        <h1 className="text-5xl text-center font-bold text-black md:text-5xl md:font-normal md:text-start lg:text-9xl " id="title-2">
+        Your Journey Starts
+        </h1>
+        <h1 className="text-5xl text-center font-bold text-black md:text-5xl md:font-normal  md:text-start lg:text-9xl " id="title-3">
+        Stay Tuned...
+        </h1>
         </div>
         <div className="h-screen flex bg-gray-950 justify-center items-center">
           <h1
