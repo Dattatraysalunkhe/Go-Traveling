@@ -34,9 +34,16 @@ app.listen(port , () => {
 app.use(express.json())  //we requesting json fromat data
 app.use(cookieParser())
 
-app.use("/api", (req,res) =>{
-   res.send("from .ENV solved")
-})
+// app.use("/api", (req,res) =>{
+//    res.send("from .ENV solved")
+// })
+
+import authRoter from './Routes/auth.route.js'
+
+app.use('/api/auth',authRoter)
+
+
+
 
 //  this code for after use api beacuse below code is client biuld make api above this code
 
