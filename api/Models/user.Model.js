@@ -36,7 +36,13 @@ const UserSchema = new mongoose.Schema(
          },
          countriesVisited:[{
             type:String
-         }]
+         }],
+         refreshToken:{
+            type:String
+         },
+         accessToken:{
+            type:String
+         }
     },
     {
          timestamps:true
