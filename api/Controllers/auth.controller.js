@@ -13,10 +13,9 @@ const genrateAccessTokenandRefreshtoken = async (valid_id) => {
 
         const refreshToken = await jwt.sign(
             {
-                // user_id:this.valid_id,
-                // email:this.email,
-                // username:this.username
-
+                user_id: user._id,
+                email: user.email,
+                username: user.username,
             },
             process.env.REFRESH_TOKEN,
             {
@@ -41,7 +40,7 @@ const genrateAccessTokenandRefreshtoken = async (valid_id) => {
 
 const signup = async (req, res, next) => {
 
-    const { username, email, password, country } = req.body
+    const { username, email, password, country, recoveryQuestion } = req.body
 
     try {
 
@@ -61,6 +60,7 @@ const signup = async (req, res, next) => {
                 )
         }
 
+
         const hashedpassword = await bcrypt.hash(password, 10)
 
 
@@ -68,7 +68,7 @@ const signup = async (req, res, next) => {
             username,
             email,
             password: hashedpassword,
-            country
+            country,
         })
 
 
@@ -161,5 +161,60 @@ const signin = async (req, res, next) => {
 
 }
 
+const updateProfile = async (req, res, next) => {
 
-export { signup, signin }
+    if (!req.user) {
+        return res
+            .status(401)
+            .json(
+                new apiError(
+                    401,
+                    "Error",
+                    ["UnAuthroised Access"]
+                )
+            )
+    }
+
+    const { username, country, language } = req.body
+
+    if (!(username || country || language)) {
+        return res
+            .status(400)
+            .json(
+                new apiError(
+                    400,
+                    "Error",
+                    ["filed are mandatory"]
+                )
+            )
+    }
+
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $set: {
+                username: username,
+                country: country,
+                language: language,
+            }
+        },
+        {
+            new: true
+        }
+    ).select("-password -refreshToken")
+
+    return res
+        .status(200)
+        .json(
+            new apiResponce(
+                200,
+                user,
+                "Account details update succesfully"
+            ))
+
+
+
+}
+
+
+export { signup, signin, updateProfile }
