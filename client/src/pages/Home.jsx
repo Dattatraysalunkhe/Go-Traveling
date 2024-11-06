@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import video1 from "../../public/Project-Images/bghome.mp4";
+import bg from '../../public/bg.jpg'
 
 const Home = () => {
   const [timeLeft, setTimeLeft] = useState({});
@@ -102,6 +103,23 @@ const Home = () => {
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    // GSAP animation for the welcome message
+    setTimeout(() => {
+      gsap.fromTo(
+        '.welcome-message',
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out' }
+      );
+
+      // GSAP animations for each section with delay and stagger
+      gsap.fromTo('.section',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.3, delay: 2 }
+      );
+    }, 7000);
+  }, []);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-800 text-white">
       <div className="relative" ref={comp}>
@@ -135,29 +153,72 @@ const Home = () => {
         style={{ zIndex: isLoaded ? 10 : -1 }} // Ensure content is above the overlay
       >
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <video
+          {/* <video
             className="absolute object-cover w-full h-full"
             autoPlay
             muted
             loop
             src={video1} // Replace with your video source
-          />
-
-          <div className='max-w-screen-lg mx-auto'>
-
-            <nav className="bg-transparent mx-auto absolute top-0 left-0 right-0 flex justify-between items-center p-4 bg-gray-900 bg-opacity-70 z-10 px-28">
-              <div className="text-2xl font-bold text-white">Logo</div>
-              <button className="bg-blue-500 text-white py-2 px-4 rounded">Login</button>
-            </nav>
+          /> */}
 
 
-            <div className="absolute top-3">
-              <h1>hello</h1>
 
-              
+          <div className="w-full h-screen bg-black">
+            <div className="relative flex flex-col items-center justify-center text-white w-full h-screen">
+
+              {/* Background Image Div (Behind the Text) */}
+              <div
+                className="absolute top-0 left-0 w-full h-full"
+                style={{
+                  // backgroundImage: `url('https://i.pinimg.com/564x/d9/54/87/d95487ffab31b9722b12eaf0e5709494.jpg')`,
+                  backgroundImage: `url(${bg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  zIndex: -1,
+                }}
+              ></div>
+
+              {/* Animated "Go-Traveling" Text */}
+              <h1
+                className="welcome-message text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl tracking-tighter font-[700] text-center relative z-10 h-[100px]"
+                style={{
+                  // backgroundImage: `url('https://i.pinimg.com/564x/d9/54/87/d95487ffab31b9722b12eaf0e5709494.jpg')`,
+                  backgroundImage: `url(${bg})`,
+
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  WebkitBackgroundClip: 'text', // Clips the background to the text shape
+                  color: 'transparent', // Make the text color transparent to show the background image
+                  display: 'inline-block', // Ensure text is inline to respect the background image clipping
+                  lineHeight: 1, // Adjust line height to prevent misalignment with other elements
+                  textAlign: 'center', // Center the text
+                }}
+              >
+                Welcome to Go-Traveling!
+              </h1>
+
+
+              {/* Short Descriptions */}
+              <div className="description text-center mt-10 w-3/4 sm:w-1/2 text-white px-4 sm:text-lg md:text-xl lg:text-[15px]">
+                <p className="section">🌍 Discover new destinations and share your journey.</p>
+                <p className="section">✈️ Plan your next adventure with fellow travelers.</p>
+                <p className="section">💬 Connect, share, and make memories with a global community.</p>
+                <p className="section">🌟 Explore, plan, and start your journey today!</p>
+              </div>
+
+              {/* Excitement Message about Future Features */}
+              <p className="section text-center mt-10 font-semibold text-xl">
+                🚀 **Exciting things are coming soon!** New features, tools, and adventures await you. Stay tuned for the next big update!
+              </p>
+
+              {/* Final Motivational Message */}
+              <p className="section text-center mt-8 font-bold text-2xl">
+                The world is waiting. Let’s explore it together. 🌎
+              </p>
             </div>
-
           </div>
+
+
 
 
         </div>
